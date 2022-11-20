@@ -1,28 +1,43 @@
-import { useNavigate, Form, useActionData } from "react-router-dom" //Componente de Form 
+import { useNavigate, Form, useActionData, redirect } from "react-router-dom" //Componente de Form 
 import Formulario from "../components/Formulario"
 import Error from "../components/Error"
+import { agregarCliente } from "../data/Clientes"
 
-export async function  action ({request}) { //action una de las propiedades del react router dom 
-  //Procesa la entrada de datos de un form 
-  const formData = await request.formData()
 
-  const datos = Object.fromEntries(formData)
+  export async function  action ({request}) { 
+    //action una de las propiedades del react router dom 
+    //Procesa la entrada de datos de un form 
+    const formData = await request.formData()
+    const email =  formData.get('email')
+    const datos = Object.fromEntries(formData)
 
-  //validacion
-  const errores =[]
-  if (Object.values(datos).includes('')){
-    errores.push('Todos los campos son obligatorios')
+    //validacion
+    const errores =[]
+    if (Object.values(datos).includes('')){
+      errores.push('Todos los campos son obligatorios')
+    }
+
+    //Ayuda a validar el E-mail
+    let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+    
+    if(!regex.test(email)){
+      errores.push('El E-mail no es valido')
+    }
+
+    //retonar datos 
+    if(Object.keys(errores).length){
+      return errores
+    }
+
+    await agregarCliente(datos)
+
+    return redirect('/') //se recomienda redirec para action y loader
   }
-
-  //retonar datos 
-  if(Object.keys(errores).length){
-    return errores
-  }
-}
 
 const NuevoCliente = () => {
+
     const navigate = useNavigate()
-  const errores = useActionData()
+    const errores = useActionData()//retornar lo que tenemos en los accion
  
   return (
     <>

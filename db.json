@@ -1,0 +1,12 @@
+{
+  "clientes": [
+    {
+      "nombre": "Jonathan",
+      "empresa": "Pixel",
+      "email": "villegasjoncena7@gmail.com",
+      "telefono": "62654561",
+      "notas": "trrw",
+      "id": 7
+    }
+  ]
+}

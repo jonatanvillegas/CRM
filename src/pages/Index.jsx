@@ -1,52 +1,18 @@
-import { data } from 'autoprefixer'
+
 import React from 'react'
 import { useLoaderData } from 'react-router-dom'
 import Dato from '../components/Dato'
+import { obtenerClientes } from '../data/Clientes'
+
 export function loader() { // procesa datos de una Api o de un state
-    const clientes = [
-        {
-            id: 1,
-            nombre:'juan',
-            telefono: 151654841,
-            email:'noto@noto.com',
-            empresa: 'Pixel'
-        },
-        {
-            id: 2,
-            nombre:'jose',
-            telefono: 115321516,
-            email:'jose@noto.com',
-            empresa: 'Pixel'
-        },
-        {
-            id: 3,
-            nombre:'pedro',
-            telefono: 4891323135,
-            email:'pedro@noto.com',
-            empresa: 'Pixel'
-        },
-        {
-            id: 4,
-            nombre:'javier',
-            telefono: 746688265,
-            email:'javier@noto.com',
-            empresa: 'Pixel'
-        },
-        {
-            id: 5,
-            nombre:'josue',
-            telefono: 785654865,
-            email:'josue@noto.com',
-            empresa: 'Pixel'
-        }
-    ]
+    const clientes = obtenerClientes()
 
     return clientes
 }
 
 const Index = () => {
 
-    const datos = useLoaderData();
+    const datos = useLoaderData(); //funciona para acceder lo que retornes en loader en este caso clientes 
 
   return (
     <>
